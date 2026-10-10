@@ -35,7 +35,14 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
   <p class="code">Error 404</p>
   <h1>Lost in<br>the void<span>.</span></h1>
   <p>This page fell past the event horizon. Head back to the homepage and try again.</p>
-  <a href="/">Back to offendeer.com</a>
+  <a href="/" id="home">Back to offendeer.com</a>
 </main>
+<script>
+/* on the github.io address the site lives in a subfolder (/offendeer.io/), so send the button there */
+if (location.hostname.endsWith('github.io')) {
+  const home = document.getElementById('home'), base = location.pathname.split('/')[1];
+  if (base) { home.href = '/' + base + '/'; home.textContent = 'Back to the homepage'; }
+}
+</script>
 </body>
 </html>
