@@ -249,6 +249,50 @@ blockquote cite{display:block;margin-top:12px;font-style:normal;font-family:var(
 .foot-row a{text-decoration:none;transition:color .2s}
 .foot-row a:hover{color:var(--accent)}
 
+/* project pages */
+.pview{padding-top:calc(108px + env(safe-area-inset-top,0px));padding-bottom:clamp(88px,11vw,150px)}
+.pv-crumbs{display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-mid)}
+.pv-crumbs a{text-decoration:none;color:var(--fg);transition:color .2s}
+.pv-crumbs a:hover{color:var(--accent)}
+.pv-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:28px 48px;margin-top:clamp(40px,6vw,84px)}
+.pv-title{margin:16px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(54px,10.5vw,164px);line-height:.92;letter-spacing:-.03em;text-wrap:balance;overflow-wrap:anywhere}
+.pv-sub{margin:18px 0 0;max-width:46ch;font-size:clamp(17px,1.6vw,21px);line-height:1.5;color:var(--fg-mid)}
+.pv-cats{margin-top:22px}
+.pv-hero{margin-top:clamp(36px,5vw,64px)}
+.pv-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(36px,6vw,96px);margin-top:clamp(56px,7vw,104px)}
+.pv-meta{position:sticky;top:calc(100px + env(safe-area-inset-top,0px));align-self:start}
+.pv-meta dl{margin:0;border-top:1px solid var(--line-strong)}
+.pv-meta dl div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.pv-meta dt{flex:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-low)}
+.pv-meta dd{margin:0;min-width:0;text-align:right;font-size:14.5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.pv-body{display:flex;flex-direction:column;gap:18px;max-width:680px;min-width:0}
+.pv-body h2{margin:30px 0 0;font-family:var(--f-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.pv-body h2:first-child{margin-top:0}
+.pv-body > p:not(.lead){margin:0;color:var(--fg-mid)}
+.pv-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.pv-list li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;padding:15px 0;border-bottom:1px solid var(--line);color:var(--fg)}
+.pv-list li span{padding-top:3px;font-family:var(--f-mono);font-size:10.5px;color:var(--fg-low);font-variant-numeric:tabular-nums}
+.pv-gal-label{margin-top:clamp(64px,8vw,112px)}
+.pv-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px;margin-top:18px}
+.pv-gallery figure{margin:0;min-width:0}
+.pv-gallery figcaption{margin-top:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--fg-mid)}
+.pv-next{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:clamp(72px,9vw,128px)}
+.pv-next a{position:relative;display:flex;flex-direction:column;gap:12px;padding:26px;border:1px solid var(--line);border-radius:12px;background:var(--bg-raise);text-decoration:none;transition:border-color .3s}
+.pv-next a.next{align-items:flex-end;text-align:right}
+.pv-next a span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-mid)}
+.pv-next a b{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(28px,3.4vw,48px);line-height:1;transition:color .25s}
+.pv-next a:hover{border-color:var(--accent-soft)}
+.pv-next a:hover b{color:var(--accent)}
+@media (max-width:960px){
+  .pv-head,.pv-grid{grid-template-columns:minmax(0,1fr)}
+  .pv-head .btn{justify-self:start}
+  .pv-meta{position:static}
+}
+@media (max-width:560px){
+  .pv-next{grid-template-columns:minmax(0,1fr)}
+  .pv-next a.next{align-items:flex-start;text-align:left}
+}
+
 /* interactions: tilt + glare, cursor-following border, magnetic buttons, hero depth, scroll progress */
 .proj-media,.svc,.rcard{position:relative}
 .tilt{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--ts,1));will-change:transform}
@@ -375,13 +419,13 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
              scripting ui building animation modeling vfx  (a filter button appears for each one in use).
              For your own picture, use <canvas class="ascii" data-img="your-image.png"></canvas>
              with the image file next to index.html; it is turned into ASCII on load. -->
-        <article class="proj" data-i="1" data-cat="vfx">
-          <a class="proj-media" href="https://www.roblox.com/games/131378938323232/EREBUS-BLACK-HOLE-TEST" target="_blank" rel="noopener" aria-label="Play EREBUS on Roblox">
+        <article class="proj" data-i="1" data-cat="vfx scripting modeling">
+          <a class="proj-media" href="#project-erebus" aria-label="Open the EREBUS project page">
             <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pid">Place 131378938323232</span></div>
             <div class="proj-screen">
               <canvas class="ascii" data-art="erebus"></canvas>
-              <span class="proj-play" aria-hidden="true">▶</span>
-              <span class="proj-cta">Play on Roblox ↗</span>
+              <span class="proj-play" aria-hidden="true">→</span>
+              <span class="proj-cta">View project →</span>
             </div>
           </a>
           <div class="proj-body">
@@ -389,19 +433,19 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
             <div>
               <h3>EREBUS</h3>
               <p>A black hole test. One object, a ring of burning light, and a dark core that the whole scene bends around.</p>
-              <ul class="tags"><li>Created Oct 06, 2026</li><li>Lighting &amp; VFX</li><li>Test build</li></ul>
+              <ul class="tags"><li>Oct 06, 2026</li><li>Lighting &amp; VFX</li><li>Scripting</li><li>3D Modeling</li></ul>
             </div>
-            <a class="proj-arrow" href="https://www.roblox.com/games/131378938323232/EREBUS-BLACK-HOLE-TEST" target="_blank" rel="noopener" aria-label="Open EREBUS on Roblox">↗</a>
+            <a class="proj-arrow" href="#project-erebus" aria-label="Open the EREBUS project page">→</a>
           </div>
         </article>
 
-        <article class="proj" data-i="2" data-cat="scripting">
-          <a class="proj-media" href="https://www.roblox.com/games/94079154793930/Hold-the-Colours" target="_blank" rel="noopener" aria-label="Play Hold the Colours on Roblox">
+        <article class="proj" data-i="2" data-cat="scripting ui animation building">
+          <a class="proj-media" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">
             <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pid">Place 94079154793930</span></div>
             <div class="proj-screen">
               <canvas class="ascii" data-art="colours"></canvas>
-              <span class="proj-play" aria-hidden="true">▶</span>
-              <span class="proj-cta">Play on Roblox ↗</span>
+              <span class="proj-play" aria-hidden="true">→</span>
+              <span class="proj-cta">View project →</span>
             </div>
           </a>
           <div class="proj-body">
@@ -409,19 +453,19 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
             <div>
               <h3>Hold the Colours</h3>
               <p>One flag and everyone who wants it. Take the colours, then keep them for as long as you can stand your ground.</p>
-              <ul class="tags"><li>Created Oct 05, 2026</li><li>Scripting</li></ul>
+              <ul class="tags"><li>Oct 05, 2026</li><li>Scripting</li><li>UI Design</li><li>Animation</li><li>Building</li></ul>
             </div>
-            <a class="proj-arrow" href="https://www.roblox.com/games/94079154793930/Hold-the-Colours" target="_blank" rel="noopener" aria-label="Open Hold the Colours on Roblox">↗</a>
+            <a class="proj-arrow" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">→</a>
           </div>
         </article>
 
-        <article class="proj" data-i="3" data-cat="building">
-          <a class="proj-media" href="https://www.roblox.com/games/96555387229193/Kombinat" target="_blank" rel="noopener" aria-label="Play Kombinat on Roblox">
+        <article class="proj" data-i="3" data-cat="building modeling vfx">
+          <a class="proj-media" href="#project-kombinat" aria-label="Open the Kombinat project page">
             <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pid">Place 96555387229193</span></div>
             <div class="proj-screen">
               <canvas class="ascii" data-art="kombinat"></canvas>
-              <span class="proj-play" aria-hidden="true">▶</span>
-              <span class="proj-cta">Play on Roblox ↗</span>
+              <span class="proj-play" aria-hidden="true">→</span>
+              <span class="proj-cta">View project →</span>
             </div>
           </a>
           <div class="proj-body">
@@ -429,9 +473,9 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
             <div>
               <h3>Kombinat</h3>
               <p>A Soviet industrial complex. Concrete blocks, a monument in the middle, and a skyline built to feel heavy.</p>
-              <ul class="tags"><li>Created Oct 04, 2026</li><li>Building</li></ul>
+              <ul class="tags"><li>Oct 04, 2026</li><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
             </div>
-            <a class="proj-arrow" href="https://www.roblox.com/games/96555387229193/Kombinat" target="_blank" rel="noopener" aria-label="Open Kombinat on Roblox">↗</a>
+            <a class="proj-arrow" href="#project-kombinat" aria-label="Open the Kombinat project page">→</a>
           </div>
         </article>
       </div>
@@ -578,6 +622,169 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
     </div>
   </section>
 </main>
+
+<!-- ===== Project pages. Each one opens at #project-<id>, e.g. offendeer.com/#project-erebus.
+     Text marked as placeholder copy is safe to rewrite; keep the ids and data-art values. ===== -->
+<article class="pview" id="project-erebus" data-title="EREBUS" hidden aria-labelledby="pv-erebus-h">
+  <div class="wrap">
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">01</span> / 03</span></nav>
+    <header class="pv-head">
+      <div>
+        <p class="eyebrow">Black hole test · 2026</p>
+        <h1 class="pv-title" id="pv-erebus-h">EREBUS<span class="acc">.</span></h1>
+        <p class="pv-sub">One object, a ring of burning light, and a dark core the whole scene bends around.</p>
+        <ul class="tags pv-cats"><li>Lighting &amp; VFX</li><li>Scripting</li><li>3D Modeling</li></ul>
+      </div>
+      <a class="btn primary" href="https://www.roblox.com/games/131378938323232/EREBUS-BLACK-HOLE-TEST" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
+    </header>
+    <div class="proj-media pv-hero">
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pid">Place 131378938323232</span></div>
+      <div class="proj-screen"><canvas class="ascii" data-art="erebus"></canvas></div>
+    </div>
+    <div class="pv-grid">
+      <aside class="pv-meta">
+        <dl>
+          <div><dt>Role</dt><dd>Solo developer</dd></div>
+          <div><dt>Created</dt><dd>Oct 06, 2026</dd></div>
+          <div><dt>Status</dt><dd>Test build</dd></div>
+          <div><dt>Genre</dt><dd>Showcase</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Luau, Blender</dd></div>
+          <div><dt>Place ID</dt><dd>131378938323232</dd></div>
+        </dl>
+      </aside>
+      <div class="pv-body">
+        <h2>Overview</h2>
+        <p class="lead">EREBUS is a test place built around a single object: a black hole. I wanted to see how far Roblox lighting, particles and a bit of math could go toward something that feels enormous, and slightly wrong to stand next to.</p>
+        <p>Everything in the scene exists to sell that one object. The sky is nearly empty, the light comes from the disk, and the core reads as a hole in the world rather than a black ball.</p>
+        <h2>What I built</h2>
+        <ul class="pv-list">
+          <li><span>01</span>An accretion disk made from layered beams and particle rings that spin faster the closer they get to the center.</li>
+          <li><span>02</span>A shadow core with a thin bright rim, so it reads as missing space instead of a dark sphere.</li>
+          <li><span>03</span>Lighting and post-processing tuned so the disk is the only real light in the scene.</li>
+          <li><span>04</span>A disk mesh modeled in Blender and textured to hold up when you fly close to it.</li>
+        </ul>
+        <h2>What's next</h2>
+        <p>Real pull on loose parts, a lensing effect on the skybox, and a way to fall in.</p>
+      </div>
+    </div>
+    <p class="eyebrow pv-gal-label">Gallery</p>
+    <div class="pv-gallery">
+      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="erebusRing"></canvas></div></div><figcaption>The ring, from the place's second thumbnail</figcaption></figure>
+    </div>
+    <nav class="pv-next" aria-label="More projects">
+      <a class="prev" href="#project-kombinat"><span>← Previous</span><b>Kombinat</b></a>
+      <a class="next" href="#project-hold-the-colours"><span>Next →</span><b>Hold the Colours</b></a>
+    </nav>
+  </div>
+</article>
+
+<article class="pview" id="project-hold-the-colours" data-title="Hold the Colours" hidden aria-labelledby="pv-htc-h">
+  <div class="wrap">
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">02</span> / 03</span></nav>
+    <header class="pv-head">
+      <div>
+        <p class="eyebrow">Round-based game · 2026</p>
+        <h1 class="pv-title" id="pv-htc-h">Hold the Colours<span class="acc">.</span></h1>
+        <p class="pv-sub">One flag and everyone who wants it.</p>
+        <ul class="tags pv-cats"><li>Scripting</li><li>UI Design</li><li>Animation</li><li>Building</li></ul>
+      </div>
+      <a class="btn primary" href="https://www.roblox.com/games/94079154793930/Hold-the-Colours" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
+    </header>
+    <div class="proj-media pv-hero">
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pid">Place 94079154793930</span></div>
+      <div class="proj-screen"><canvas class="ascii" data-art="colours"></canvas></div>
+    </div>
+    <div class="pv-grid">
+      <aside class="pv-meta">
+        <dl>
+          <div><dt>Role</dt><dd>Solo developer</dd></div>
+          <div><dt>Created</dt><dd>Oct 05, 2026</dd></div>
+          <div><dt>Status</dt><dd>In development</dd></div>
+          <div><dt>Genre</dt><dd>Round-based PvP</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Luau, Moon Animator 2</dd></div>
+          <div><dt>Place ID</dt><dd>94079154793930</dd></div>
+        </dl>
+      </aside>
+      <div class="pv-body">
+        <h2>Overview</h2>
+        <p class="lead">Hold the Colours is a round-based game about a single flag. Grab the colours, carry them, and hold on for as long as you can while the whole server tries to take them back.</p>
+        <p>Rounds are short and loud. The longer you hold the flag, the more points you bank, and the bigger the target on your back.</p>
+        <h2>What I built</h2>
+        <ul class="pv-list">
+          <li><span>01</span>A server-run round loop: intermission, match, results, and a clean reset between them.</li>
+          <li><span>02</span>Flag pickup, carry and drop, with the flag returning to its stand if nobody grabs it in time.</li>
+          <li><span>03</span>A HUD that shows who holds the colours, how long they've held them, and the round timer.</li>
+          <li><span>04</span>Carry and capture animations so the flag-bearer reads from across the map.</li>
+          <li><span>05</span>An arena laid out around clear sightlines to the flag stand.</li>
+        </ul>
+        <h2>What's next</h2>
+        <p>Teams, more maps, and a leaderboard for the longest hold.</p>
+      </div>
+    </div>
+    <p class="eyebrow pv-gal-label">Gallery</p>
+    <div class="pv-gallery">
+      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-field="flag"></canvas></div></div><figcaption>The colours, drawn live in ASCII</figcaption></figure>
+    </div>
+    <nav class="pv-next" aria-label="More projects">
+      <a class="prev" href="#project-erebus"><span>← Previous</span><b>EREBUS</b></a>
+      <a class="next" href="#project-kombinat"><span>Next →</span><b>Kombinat</b></a>
+    </nav>
+  </div>
+</article>
+
+<article class="pview" id="project-kombinat" data-title="Kombinat" hidden aria-labelledby="pv-kombinat-h">
+  <div class="wrap">
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">03</span> / 03</span></nav>
+    <header class="pv-head">
+      <div>
+        <p class="eyebrow">Environment · 2026</p>
+        <h1 class="pv-title" id="pv-kombinat-h">Kombinat<span class="acc">.</span></h1>
+        <p class="pv-sub">A Soviet industrial complex built to feel heavy.</p>
+        <ul class="tags pv-cats"><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
+      </div>
+      <a class="btn primary" href="https://www.roblox.com/games/96555387229193/Kombinat" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
+    </header>
+    <div class="proj-media pv-hero">
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pid">Place 96555387229193</span></div>
+      <div class="proj-screen"><canvas class="ascii" data-art="kombinat"></canvas></div>
+    </div>
+    <div class="pv-grid">
+      <aside class="pv-meta">
+        <dl>
+          <div><dt>Role</dt><dd>Solo developer</dd></div>
+          <div><dt>Created</dt><dd>Oct 04, 2026</dd></div>
+          <div><dt>Status</dt><dd>In development</dd></div>
+          <div><dt>Genre</dt><dd>Exploration</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Blender</dd></div>
+          <div><dt>Place ID</dt><dd>96555387229193</dd></div>
+        </dl>
+      </aside>
+      <div class="pv-body">
+        <h2>Overview</h2>
+        <p class="lead">Kombinat is an environment piece: a Soviet-era industrial complex built at full scale. Concrete blocks, a monument at the center, and a skyline meant to feel cold and very large.</p>
+        <p>Most of the work is in the build and the light. Every building comes from the same modular kit, and the fog and low sun do the rest.</p>
+        <h2>What I built</h2>
+        <ul class="pv-list">
+          <li><span>01</span>A modular kit of concrete panels, windows and roof pieces reused across every building.</li>
+          <li><span>02</span>A central monument modeled in Blender and brought into Studio.</li>
+          <li><span>03</span>Fog, haze and low warm light to sell the size of the place.</li>
+          <li><span>04</span>A layout planned so the monument is visible from almost everywhere.</li>
+        </ul>
+        <h2>What's next</h2>
+        <p>Interiors, ambient sound, and a reason to explore.</p>
+      </div>
+    </div>
+    <p class="eyebrow pv-gal-label">Gallery</p>
+    <div class="pv-gallery">
+      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="kombinat2"></canvas></div></div><figcaption>Title card</figcaption></figure>
+      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="kombinat3"></canvas></div></div><figcaption>Skyline</figcaption></figure>
+    </div>
+    <nav class="pv-next" aria-label="More projects">
+      <a class="prev" href="#project-hold-the-colours"><span>← Previous</span><b>Hold the Colours</b></a>
+      <a class="next" href="#project-erebus"><span>Next →</span><b>EREBUS</b></a>
+    </nav>
+  </div>
+</article>
 
 <footer class="foot">
   <div class="wrap">
@@ -795,7 +1002,118 @@ colours: `
 000000000001222344455556677777887776554433222222
 000000000001222344455567777888887765544432222222
 000000000001122344555667777888887765544332222222
-000000000000122344555667778888877765443322222221`
+000000000000122344555667778888877765443322222221`,
+erebusRing: `
+0110000000001232332000000000000000000000000000000000000001221210
+1210000000113983111101100000113111000000000000210000000100001232
+1134445434555654455554542111122222221111110010111111111011100112
+0122223443333332233333332111244675343221111343111110111010001332
+00000122100000000000000000124559b8543233321565100000000011232000
+0001211000000000110000000113458bcb988644312554100000013321101000
+012200000000000112100011124569acddcbba86432343100012331000001110
+12100000000000111111111234579bdeeeeedcba853222114422000000000000
+1000000000001000000111124569beffda99acdca84222441000000000000000
+000000000000000000001123468cefa64332235bc98632100000000000000000
+00000000000011000001112368bef843222111129c9521000000000000000000
+0000000000000001111111246aef832211111111289521000000000000000000
+0000000000001111111112358cfb322111111000029731000000000000000000
+0000000011111111122233479ef6322111100000015742100000000000000000
+0000011122333445566779acefe5332211111100013864211000000000000000
+123455678aabbcddeeefffffffd6554433222111113aa8764432211110000000
+6678aabcccdddeeeffffffffffd76555433222111139a9876655433322211110
+6568aa99abbbdeedeffffffffffbbbba98754433334998765544332221111111
+54555779bbcadeda9beffffffffcdccddccba987768a98765443221111000000
+344467679aa8cdb667cedeefefebba7788877655557986543222111111000000
+244479668996ab93338caccdbeeb874454444333337864432221111111100000
+12224544667445412247789a8bca542222221111147532211111100000000000
+1111111223410111111112675654842111111111365321111100000000000000
+1001000112410001110111233563982111111113643211111000000000110000
+0001000134100000000110111222584442344445554323443111001124443100
+0000000010000001010000111111497776b88975966458668454114577668200
+0000000000000010000000011111496554b66875a55358668565115676556200
+0000000000000100000111011111496543a56935965357557565225566568400
+0000000000000000000011011101387763822724977548778447668367778300
+0000000000000000000010000000123331110111332212332112332113332100
+0000000000000000000000000000001231121221122112222212111111121000
+0000000000000000000000000000000230253444345445555554333543442100
+0000000000000000000000000000001430011111112222222333222222222100
+1100000000000000000000000000013310000000003565665555534444444111
+1210000000000000000000000000234211111111112232222222212222222121
+0110000000000000000000000013431000000000000001111000000000000111`,
+kombinat2: `
+3334444443333785344444434656554333455333444433334444333223444433
+33344444444328c9334444459bacb54333457866455433355556643334444433
+23344444455114cb333455569aace758baa8aa9a766644666655543454677432
+2233444479722564333345559aabdb7aaaccaa8888543344777a7a4cd8cda322
+2222334499a9b7633333345579aabdd999aca98a9ab5eee6cc8ead4dd85c7222
+22222334799bca7543333345569aabbc9d7eeb8feef6ece8bd7fde5dbb4c8222
+222232334789bd7644333334556aacbfcc9fcf7ffff7def8ae6eee7dcd5c9222
+222233333358aca85543333345579aaff98fbf7fefe9cedd8e7ebe8dcd8ba223
+3222333333359ab865554333345558affc7fbf8fdfdaafde7f8d8c8b78654334
+43333333333358a7522554333345569fef8fdf8ececb8db74645443332233444
+444443333333354100156b643334556eceabeb59764464334444334322223444
+4444444443333310018cadd74333455555435487434675455233787611124444
+44444444444433336dffbdfc5443345434434555423979865234544311134433
+44444444444444588cffedfe6554334543212896523533322112223334443332
+44444444444444379afffcfc4454302442112222111233322112214444333322
+333344444444442499cffdfc2366302342123333101443333222313333333322
+22333333344421107aafedd94bfe322434025665101433453211113333333333
+222333333212100039afadfe9ff9213443018cd9100024543111203333334444
+222333332101000029ae9cedbd810024430019e4000003333212203444444444
+222333331000000029bc45558c82001441000140000002444222203444444444
+333333331000000039bb44457b94112220000160000002222111102344444444
+44444432100000003786445556751114410001c3000000000000000233333333
+4444443000000000111344554441000220000010000000000000000133111222
+4444442000000000111233444200000000000000000000000000000133100222
+4444442000000000111222233100000000000000000000000000000133232233
+2222221000000000211121223100000000000000000000000000000001111111
+0000000000000000201111122100000000000000000000000000000000000000
+0000000000000001101111122100000000000000000000000000000000000000
+0000000000000002001111223100000000000000000000000000000000000000
+0000000000000002001121223100000000000000000000000000000000000000
+0000000000000001001131011100000000000000000000000000000000000000
+0001111111122221000031001323333333331000000000000000000000000000
+123344444444444100015222467889aa99995211221121211111111122111100
+33334444444444432224555567899aaaaacbb752783365665573257457666200
+33333444444444444444444567889aaaaaa99300110000010000000000000000
+2222222222222222222222334556667777766300000000000000000000000000`,
+kombinat3: `
+888999999aaaaabbbbbbbcccccccccccccccdccccccccbbbbbaaa99999888888
+889999999aaaaaaaaabbbbbaaababcbacbbcccccccccccbbbbaaaa9999999988
+99999999aaaaaaa9bbabbcdeaefcffc8bbbbbbbbbbbccbbbbbbbbbaaaaaaaaa9
+aaa9bbbbed8eeeeaffddeeffbefd8f79bbbbbbbbbbbcccccccccccccccccbbbb
+99aaeebdeeaffffaffdcfdffcfff7f8abbbbbbbbbcccdddddeeeeeeeedddddcc
+99a9ef8ceebffff9ffecfdffefff9f9abbbbbbbbbcccccdddeefeeeddddccccc
+9999ffbceebeeef9fefcfcffeedead9bcccccccccccccccccdddddddcccbbccc
+bba9fddbff9ecce7dc8786677778899cddddddcccccccccccddccccccbbbbccc
+abbab7959767566788abbcbbbbbaa98adddccccccccccdcdddddcccbbbbbbbbb
+899a8899a9aa999aa968aaa9a8aaa65acccccccccddeeeceeddcccccbbbbbbbb
+68888758997a9999a85798777666657bbbbbbcccccccc88ccccccccccbbbbbbb
+466664477656555554445555667777899999999999aaa89aaaabbbbbbbbbbbbb
+3444444444444555555676666666666777777777778888899999aaaaabbbbbbb
+3444455544454555555576556655566677777777777778888888888889999999
+3654444532343334554465554333355566666666666667666666666666666666
+3344333743333333223344443334224454455555555557555555555555555555
+3133511664444445354344443354444443432344445556555555555555554444
+2132212333333333213344444442222343333344444446444444444565444444
+2011333334333331211344333341011132221111244445444444444445444444
+0002333333333332111121110121111100000011244445544444432211223334
+3333333334344433222233334444431001111122244444444444434332322222
+3333333333333443333333222222221000000100244444444444444322322101
+3333333333332222221212222222222211100001333333344443344544323303
+2222333333332221111222223333334444321000001321112222222344444333
+3333333333333333333444444444444444443200001011332011111223444333
+3333333333333333343444444444444443333211003200110000223333333333
+3333333333333333433444444444444444433302230112123321333333333333
+2333333333333333333444444344444443333201431233343321333333333333
+2333333333333333333333443333333223333330131234433211333333333333
+2333333333333333333433333333333333433443100221100002333333333333
+2233333333333333333332233333433333334333310000122333333333333333
+2232333333333333333333333333443323333332332333333333333333333333
+2222333333333333333333333333333222111233444323433333332333333222
+2222223333333333333333333332222220001555766415613566511554453000
+2223323333333333333322222223333321111111111111101111100110000000
+2223333333333333333222333333333333333333333333333333333333333322`
 };
 
 /* ---------- basics ---------- */
@@ -837,7 +1155,10 @@ const ART = {
   avatar: decode(RAW.avatar, 440 / 697),
   erebus: decode(RAW.erebus, 16 / 9),
   kombinat: decode(RAW.kombinat, 16 / 9),
-  colours: decode(RAW.colours, 16 / 9)
+  colours: decode(RAW.colours, 16 / 9),
+  erebusRing: decode(RAW.erebusRing, 16 / 9),
+  kombinat2: decode(RAW.kombinat2, 16 / 9),
+  kombinat3: decode(RAW.kombinat3, 16 / 9)
 };
 
 /* ---------- glyph atlas: every ramp + glitch character pre-drawn once per size/colour ---------- */
@@ -1316,6 +1637,28 @@ document.querySelectorAll('canvas[data-art]').forEach(cv => {
   new Layer(cv, { px: w => w < 520 ? 6 : 8, alphaMin: .2, hoverR: 90, revealDur: 1.7, hoverEl: cv.closest('.proj-media'), field: imgField(ART[cv.dataset.art], { fit: 'cover' }) });
 });
 
+/* Hold the Colours gallery: a tricolour waving on its pole, drawn live */
+const flagField = (u, v, t, L) => {
+  const pole = .28, x0 = .28, x1 = .74, y0 = .2, y1 = .54, ground = .9, cw = .7 / L.cols;
+  if (Math.abs(u - pole) < cw && v > .11 && v < ground) return .82;
+  if (Math.hypot((u - pole) * L.aspect, v - .1) < .022) return 1;
+  if (Math.abs(v - ground) < .5 / L.rows && u > .12 && u < .88) return .3;
+  if (u > x0 && u < x1) {
+    const k = (u - x0) / (x1 - x0), ph = k * 11 - t * 3.2;
+    const vy = v - .03 * k * Math.sin(ph) - .012 * k * k;
+    if (vy > y0 && vy < y1) {
+      const band = Math.min(2, Math.floor((vy - y0) / (y1 - y0) * 3));
+      const edge = vy - y0 < .012 || y1 - vy < .012 || x1 - u < .006;
+      const shade = .6 + .35 * Math.cos(ph);
+      return clamp01(edge ? .9 : shade * [1, .5, .78][band]);
+    }
+  }
+  return -1;
+};
+document.querySelectorAll('canvas[data-field="flag"]').forEach(cv => {
+  new Layer(cv, { px: w => w < 520 ? 6 : 8, alphaMin: .2, accLo: .86, accHi: 1.01, hoverR: 90, revealDur: 1.7, hoverEl: cv.closest('.proj-media'), field: flagField });
+});
+
 /* your own screenshots: <canvas class="ascii" data-img="file.png"> is sampled into ASCII on load (same-site images) */
 function sampleImage(src) {
   return new Promise((res, rej) => {
@@ -1660,6 +2003,7 @@ if (FINE) {
   };
   document.querySelectorAll('.proj-media').forEach(el => { el.classList.add('spot'); tilt(el, 5); });
   document.querySelectorAll('.svc').forEach(el => { el.classList.add('spot'); tilt(el, 9); });
+  document.querySelectorAll('.pv-next a').forEach(el => { el.classList.add('spot'); tilt(el, 7); });
   const rc = document.querySelector('.rcard'); rc.classList.add('spot'); tilt(rc, 10);
   tilt(document.querySelector('.polaroid'), 12);
 
@@ -1685,6 +2029,36 @@ if (FINE) {
     hero.addEventListener('pointerleave', () => { hero.style.setProperty('--hx', '0'); hero.style.setProperty('--hy', '0'); });
   }
 }
+
+/* ---------- project pages: #project-<id> swaps the home page for that project's page; any other hash shows home ---------- */
+const homeEl = $('top'), pviews = [...document.querySelectorAll('.pview')], baseTitle = document.title;
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  const pv = h.startsWith('project-') ? pviews.find(p => p.id === h) : null;
+  if (pv) {
+    homeEl.hidden = true;
+    pviews.forEach(p => { p.hidden = p !== pv; });
+    pv.querySelectorAll('canvas.ascii').forEach(cv => { if (cv._layer) cv._layer.revealT = null; });
+    secLinks.forEach(a => a.classList.remove('active'));
+    document.title = pv.dataset.title + ' · offendeer';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  } else {
+    const wasAway = homeEl.hidden;
+    homeEl.hidden = false;
+    pviews.forEach(p => { p.hidden = true; });
+    document.title = baseTitle;
+    if (wasAway) {
+      const target = h && document.getElementById(h);
+      requestAnimationFrame(() => {
+        if (target) target.scrollIntoView({ behavior: 'instant' });
+        else window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    }
+  }
+  onProgress();
+}
+window.addEventListener('hashchange', route);
+route();
 };
 /* in the Claude preview, boot through its live-update hook so a republish re-runs everything; on the real site, boot once */
 if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(boot); else boot();
