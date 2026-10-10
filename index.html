@@ -47,6 +47,7 @@ html{background:var(--bg);scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit}
 img{max-width:100%}
+[hidden]{display:none!important}
 ::selection{background:var(--accent);color:var(--on-accent)}
 :focus-visible{outline:1px solid var(--accent);outline-offset:4px;border-radius:3px}
 .wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
@@ -254,7 +255,8 @@ blockquote cite{display:block;margin-top:12px;font-style:normal;font-family:var(
 .pv-crumbs{display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-mid)}
 .pv-crumbs a{text-decoration:none;color:var(--fg);transition:color .2s}
 .pv-crumbs a:hover{color:var(--accent)}
-.pv-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:28px 48px;margin-top:clamp(40px,6vw,84px)}
+.pv-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;gap:24px clamp(24px,4vw,48px);margin-top:clamp(40px,6vw,84px)}
+.pv-icon{display:block;width:clamp(92px,10vw,148px);height:auto;aspect-ratio:1;object-fit:cover;border:1px solid var(--line-strong);border-radius:22%;box-shadow:0 24px 60px -24px var(--accent-soft)}
 .pv-title{margin:16px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(54px,10.5vw,164px);line-height:.92;letter-spacing:-.03em;text-wrap:balance;overflow-wrap:anywhere}
 .pv-sub{margin:18px 0 0;max-width:46ch;font-size:clamp(17px,1.6vw,21px);line-height:1.5;color:var(--fg-mid)}
 .pv-cats{margin-top:22px}
@@ -273,9 +275,33 @@ blockquote cite{display:block;margin-top:12px;font-style:normal;font-family:var(
 .pv-list li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;padding:15px 0;border-bottom:1px solid var(--line);color:var(--fg)}
 .pv-list li span{padding-top:3px;font-family:var(--f-mono);font-size:10.5px;color:var(--fg-low);font-variant-numeric:tabular-nums}
 .pv-gal-label{margin-top:clamp(64px,8vw,112px)}
-.pv-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px;margin-top:18px}
-.pv-gallery figure{margin:0;min-width:0}
-.pv-gallery figcaption{margin-top:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--fg-mid)}
+.pv-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.pv-gallery .shot:last-child:nth-child(odd){grid-column:1/-1}
+.shot{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--bg-raise);color:inherit;cursor:zoom-in;transition:border-color .3s}
+.shot:hover{border-color:var(--accent-soft)}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.shot-icon{background:radial-gradient(circle at 50% 50%,rgba(120,88,255,.2),var(--bg-raise) 65%)}
+.shot-icon img{object-fit:contain;padding:6%}
+.shot::after{content:attr(data-cap);position:absolute;left:10px;bottom:10px;z-index:5;max-width:calc(100% - 20px);padding:6px 11px;overflow:hidden;border:1px solid var(--line-strong);border-radius:999px;background:rgba(5,5,5,.8);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;color:var(--fg);white-space:nowrap;text-overflow:ellipsis}
+.pv-hero .proj-chrome{align-items:center}
+.pv-toggle{display:inline-flex;flex:none;gap:2px;padding:2px;border:1px solid var(--line-strong);border-radius:999px}
+.pv-toggle button{padding:4px 10px;border:0;border-radius:999px;background:none;color:var(--fg-mid);font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.pv-toggle button:hover{color:var(--fg)}
+.pv-toggle button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.pv-real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.pv-hero.real .pv-real{opacity:1}
+.lightbox{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:72px 16px;border:0;background:transparent;color:var(--fg)}
+.lightbox[open]{display:grid;place-items:center}
+.lightbox::backdrop{background:rgba(5,5,5,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.lightbox figure{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:min(100%,1100px);margin:0}
+.lightbox img{display:block;max-width:100%;max-height:74dvh;border:1px solid var(--line-strong);border-radius:10px;box-shadow:0 40px 100px -30px var(--accent-soft)}
+.lightbox figcaption{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-mid);text-align:center}
+.lb-btn{position:fixed;display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid var(--line-strong);border-radius:50%;background:rgba(12,11,10,.85);color:var(--fg);font-size:18px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.lb-btn:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.lb-close{top:calc(18px + env(safe-area-inset-top,0px));right:18px}
+.lb-prev,.lb-next{top:50%;margin-top:-23px}
+.lb-prev{left:18px}
+.lb-next{right:18px}
 .pv-next{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:clamp(72px,9vw,128px)}
 .pv-next a{position:relative;display:flex;flex-direction:column;gap:12px;padding:26px;border:1px solid var(--line);border-radius:12px;background:var(--bg-raise);text-decoration:none;transition:border-color .3s}
 .pv-next a.next{align-items:flex-end;text-align:right}
@@ -288,9 +314,16 @@ blockquote cite{display:block;margin-top:12px;font-style:normal;font-family:var(
   .pv-head .btn{justify-self:start}
   .pv-meta{position:static}
 }
+@media (max-width:640px){
+  .pv-gallery{grid-template-columns:minmax(0,1fr)}
+  .pv-toggle button{padding:4px 8px}
+}
 @media (max-width:560px){
   .pv-next{grid-template-columns:minmax(0,1fr)}
   .pv-next a.next{align-items:flex-start;text-align:left}
+  .lb-prev,.lb-next{top:auto;bottom:calc(20px + env(safe-area-inset-bottom,0px));margin:0}
+  .lb-prev{left:calc(50% - 56px)}
+  .lb-next{right:calc(50% - 56px)}
 }
 
 /* interactions: tilt + glare, cursor-following border, magnetic buttons, hero depth, scroll progress */
@@ -419,11 +452,11 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
              scripting ui building animation modeling vfx  (a filter button appears for each one in use).
              For your own picture, use <canvas class="ascii" data-img="your-image.png"></canvas>
              with the image file next to index.html; it is turned into ASCII on load. -->
-        <article class="proj" data-i="1" data-cat="vfx scripting modeling">
-          <a class="proj-media" href="#project-erebus" aria-label="Open the EREBUS project page">
-            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pid">Place 131378938323232</span></div>
+        <article class="proj" data-i="1" data-cat="building modeling vfx">
+          <a class="proj-media" href="#project-cologne-cathedral" aria-label="Open the Cologne Cathedral project page">
+            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Cologne Cathedral.rbxl</b></span><span class="pid">Place 129903872141944</span></div>
             <div class="proj-screen">
-              <canvas class="ascii" data-art="erebus"></canvas>
+              <canvas class="ascii" data-img="assets/games/cologne-cathedral-1.webp"></canvas>
               <span class="proj-play" aria-hidden="true">→</span>
               <span class="proj-cta">View project →</span>
             </div>
@@ -431,19 +464,19 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div class="proj-body">
             <span class="proj-num">01</span>
             <div>
-              <h3>EREBUS</h3>
-              <p>A black hole test. One object, a ring of burning light, and a dark core that the whole scene bends around.</p>
-              <ul class="tags"><li>Oct 06, 2026</li><li>Lighting &amp; VFX</li><li>Scripting</li><li>3D Modeling</li></ul>
+              <h3>Cologne Cathedral</h3>
+              <p>The Kölner Dom, rebuilt in Roblox. Twin Gothic spires towering over a square of old-town houses.</p>
+              <ul class="tags"><li>Oct 09, 2026</li><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
             </div>
-            <a class="proj-arrow" href="#project-erebus" aria-label="Open the EREBUS project page">→</a>
+            <a class="proj-arrow" href="#project-cologne-cathedral" aria-label="Open the Cologne Cathedral project page">→</a>
           </div>
         </article>
 
-        <article class="proj" data-i="2" data-cat="scripting ui animation building">
-          <a class="proj-media" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">
-            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pid">Place 94079154793930</span></div>
+        <article class="proj" data-i="2" data-cat="vfx scripting building modeling">
+          <a class="proj-media" href="#project-erebus" aria-label="Open the EREBUS project page">
+            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pid">Place 131378938323232</span></div>
             <div class="proj-screen">
-              <canvas class="ascii" data-art="colours"></canvas>
+              <canvas class="ascii" data-img="assets/games/erebus-1.webp"></canvas>
               <span class="proj-play" aria-hidden="true">→</span>
               <span class="proj-cta">View project →</span>
             </div>
@@ -451,19 +484,19 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div class="proj-body">
             <span class="proj-num">02</span>
             <div>
-              <h3>Hold the Colours</h3>
-              <p>One flag and everyone who wants it. Take the colours, then keep them for as long as you can stand your ground.</p>
-              <ul class="tags"><li>Oct 05, 2026</li><li>Scripting</li><li>UI Design</li><li>Animation</li><li>Building</li></ul>
+              <h3>EREBUS</h3>
+              <p>A research facility on the edge of a black hole. Get too close and you get spaghettified.</p>
+              <ul class="tags"><li>Oct 06, 2026</li><li>Lighting &amp; VFX</li><li>Scripting</li><li>Building</li><li>3D Modeling</li></ul>
             </div>
-            <a class="proj-arrow" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">→</a>
+            <a class="proj-arrow" href="#project-erebus" aria-label="Open the EREBUS project page">→</a>
           </div>
         </article>
 
-        <article class="proj" data-i="3" data-cat="building modeling vfx">
-          <a class="proj-media" href="#project-kombinat" aria-label="Open the Kombinat project page">
-            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pid">Place 96555387229193</span></div>
+        <article class="proj" data-i="3" data-cat="scripting ui animation building">
+          <a class="proj-media" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">
+            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pid">Place 94079154793930</span></div>
             <div class="proj-screen">
-              <canvas class="ascii" data-art="kombinat"></canvas>
+              <canvas class="ascii" data-img="assets/games/hold-the-colours-1.webp"></canvas>
               <span class="proj-play" aria-hidden="true">→</span>
               <span class="proj-cta">View project →</span>
             </div>
@@ -471,9 +504,29 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div class="proj-body">
             <span class="proj-num">03</span>
             <div>
+              <h3>Hold the Colours</h3>
+              <p>Napoleonic line battles. France against Austria, with line infantry, cavalry and artillery fighting over the colours.</p>
+              <ul class="tags"><li>Oct 05, 2026</li><li>Scripting</li><li>UI Design</li><li>Animation</li><li>Building</li></ul>
+            </div>
+            <a class="proj-arrow" href="#project-hold-the-colours" aria-label="Open the Hold the Colours project page">→</a>
+          </div>
+        </article>
+
+        <article class="proj" data-i="4" data-cat="scripting building ui modeling">
+          <a class="proj-media" href="#project-kombinat" aria-label="Open the Kombinat project page">
+            <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pid">Place 96555387229193</span></div>
+            <div class="proj-screen">
+              <canvas class="ascii" data-img="assets/games/kombinat-2.webp"></canvas>
+              <span class="proj-play" aria-hidden="true">→</span>
+              <span class="proj-cta">View project →</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <span class="proj-num">04</span>
+            <div>
               <h3>Kombinat</h3>
-              <p>A Soviet industrial complex. Concrete blocks, a monument in the middle, and a skyline built to feel heavy.</p>
-              <ul class="tags"><li>Oct 04, 2026</li><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
+              <p>A Soviet factory game. Build the factory, automate it, fulfil the plan, then launch a rocket.</p>
+              <ul class="tags"><li>Oct 04, 2026</li><li>Scripting</li><li>Building</li><li>UI Design</li><li>3D Modeling</li></ul>
             </div>
             <a class="proj-arrow" href="#project-kombinat" aria-label="Open the Kombinat project page">→</a>
           </div>
@@ -624,22 +677,79 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
 </main>
 
 <!-- ===== Project pages. Each one opens at #project-<id>, e.g. offendeer.com/#project-erebus.
-     Text marked as placeholder copy is safe to rewrite; keep the ids and data-art values. ===== -->
+     Images live in assets/games/. To change one, replace the file and keep its name.
+     The overview, "What I built" and "What's next" text is placeholder copy; rewrite it freely. ===== -->
+<article class="pview" id="project-cologne-cathedral" data-title="Cologne Cathedral" hidden aria-labelledby="pv-cologne-h">
+  <div class="wrap">
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">01</span> / 04</span></nav>
+    <header class="pv-head">
+      <img class="pv-icon" src="assets/games/cologne-cathedral-icon.webp" alt="Cologne Cathedral game icon" width="512" height="512">
+      <div>
+        <p class="eyebrow">Landmark build · 2026</p>
+        <h1 class="pv-title" id="pv-cologne-h">Cologne Cathedral<span class="acc">.</span></h1>
+        <p class="pv-sub">The Kölner Dom, rebuilt in Roblox. Explore the Gothic masterpiece.</p>
+        <ul class="tags pv-cats"><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
+      </div>
+      <a class="btn primary" href="https://www.roblox.com/games/129903872141944/Cologne-Cathedral" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
+    </header>
+    <div class="proj-media pv-hero">
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Cologne Cathedral.rbxl</b></span><span class="pv-toggle" role="group" aria-label="Main picture style"><button type="button" aria-pressed="true" data-view="ascii">ASCII</button><button type="button" aria-pressed="false" data-view="image">Image</button></span></div>
+      <div class="proj-screen"><canvas class="ascii" data-img="assets/games/cologne-cathedral-1.webp"></canvas><img class="pv-real" src="assets/games/cologne-cathedral-1.webp" alt="The Kölner Dom under a blue sky, with old-town houses at its feet" loading="lazy"></div>
+    </div>
+    <div class="pv-grid">
+      <aside class="pv-meta">
+        <dl>
+          <div><dt>Role</dt><dd>Solo developer</dd></div>
+          <div><dt>Released</dt><dd>Oct 09, 2026</dd></div>
+          <div><dt>Status</dt><dd>Public</dd></div>
+          <div><dt>Genre</dt><dd>Exploration</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Blender</dd></div>
+          <div><dt>Place ID</dt><dd>129903872141944</dd></div>
+        </dl>
+      </aside>
+      <div class="pv-body">
+        <h2>Overview</h2>
+        <p class="lead">A recreation of Cologne Cathedral, the Kölner Dom, built to be walked around and looked up at. Twin spires, flying buttresses and stone tracery, set in a square of colourful old-town houses.</p>
+        <p>The scale stays close to the real building, so the spires feel as tall as they should when you stand at the west doors.</p>
+        <h2>What I built</h2>
+        <ul class="pv-list">
+          <li><span>01</span>The west front and twin spires, with open tracery you can see the sky through.</li>
+          <li><span>02</span>Flying buttresses, pinnacles and the long nave running down the side.</li>
+          <li><span>03</span>A square of old-town houses to give the cathedral something to tower over.</li>
+          <li><span>04</span>Day and night lighting, with the spires lit gold under a full moon.</li>
+        </ul>
+        <h2>What's next</h2>
+        <p>The interior: the nave, the stained glass and the shrine.</p>
+      </div>
+    </div>
+    <p class="eyebrow pv-gal-label">Icon &amp; thumbnails</p>
+    <div class="pv-gallery">
+      <button type="button" class="shot shot-icon" data-cap="Game icon: the spires under a full moon"><img src="assets/games/cologne-cathedral-icon.webp" alt="Cologne Cathedral game icon" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Kölner Dom: explore the Gothic masterpiece"><img src="assets/games/cologne-cathedral-1.webp" alt="Cologne Cathedral thumbnail" loading="lazy"></button>
+    </div>
+    <nav class="pv-next" aria-label="More projects">
+      <a class="prev" href="#project-kombinat"><span>← Previous</span><b>Kombinat</b></a>
+      <a class="next" href="#project-erebus"><span>Next →</span><b>EREBUS</b></a>
+    </nav>
+  </div>
+</article>
+
 <article class="pview" id="project-erebus" data-title="EREBUS" hidden aria-labelledby="pv-erebus-h">
   <div class="wrap">
-    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">01</span> / 03</span></nav>
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">02</span> / 04</span></nav>
     <header class="pv-head">
+      <img class="pv-icon" src="assets/games/erebus-icon.webp" alt="EREBUS game icon" width="512" height="512">
       <div>
-        <p class="eyebrow">Black hole test · 2026</p>
+        <p class="eyebrow">Black hole research facility · 2026</p>
         <h1 class="pv-title" id="pv-erebus-h">EREBUS<span class="acc">.</span></h1>
-        <p class="pv-sub">One object, a ring of burning light, and a dark core the whole scene bends around.</p>
-        <ul class="tags pv-cats"><li>Lighting &amp; VFX</li><li>Scripting</li><li>3D Modeling</li></ul>
+        <p class="pv-sub">A research facility on the edge of a black hole. Don't get too close.</p>
+        <ul class="tags pv-cats"><li>Lighting &amp; VFX</li><li>Scripting</li><li>Building</li><li>3D Modeling</li></ul>
       </div>
       <a class="btn primary" href="https://www.roblox.com/games/131378938323232/EREBUS-BLACK-HOLE-TEST" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
     </header>
     <div class="proj-media pv-hero">
-      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pid">Place 131378938323232</span></div>
-      <div class="proj-screen"><canvas class="ascii" data-art="erebus"></canvas></div>
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>EREBUS.rbxl</b></span><span class="pv-toggle" role="group" aria-label="Main picture style"><button type="button" aria-pressed="true" data-view="ascii">ASCII</button><button type="button" aria-pressed="false" data-view="image">Image</button></span></div>
+      <div class="proj-screen"><canvas class="ascii" data-img="assets/games/erebus-1.webp"></canvas><img class="pv-real" src="assets/games/erebus-1.webp" alt="The black hole seen from the EREBUS research facility" loading="lazy"></div>
     </div>
     <div class="pv-grid">
       <aside class="pv-meta">
@@ -647,32 +757,34 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div><dt>Role</dt><dd>Solo developer</dd></div>
           <div><dt>Created</dt><dd>Oct 06, 2026</dd></div>
           <div><dt>Status</dt><dd>Test build</dd></div>
-          <div><dt>Genre</dt><dd>Showcase</dd></div>
+          <div><dt>Genre</dt><dd>Exploration</dd></div>
           <div><dt>Tools</dt><dd>Roblox Studio, Luau, Blender</dd></div>
           <div><dt>Place ID</dt><dd>131378938323232</dd></div>
         </dl>
       </aside>
       <div class="pv-body">
         <h2>Overview</h2>
-        <p class="lead">EREBUS is a test place built around a single object: a black hole. I wanted to see how far Roblox lighting, particles and a bit of math could go toward something that feels enormous, and slightly wrong to stand next to.</p>
-        <p>Everything in the scene exists to sell that one object. The sky is nearly empty, the light comes from the disk, and the core reads as a hole in the world rather than a black ball.</p>
+        <p class="lead">EREBUS puts you in a research facility orbiting a black hole. The station is built for watching it, and the game is about how close you dare to get before it pulls you in.</p>
+        <p>It started as a test of how far Roblox lighting, particles and a bit of math could go. The black hole is the only real light in the scene, and getting too close ends the way physics says it should: spaghettified.</p>
         <h2>What I built</h2>
         <ul class="pv-list">
-          <li><span>01</span>An accretion disk made from layered beams and particle rings that spin faster the closer they get to the center.</li>
-          <li><span>02</span>A shadow core with a thin bright rim, so it reads as missing space instead of a dark sphere.</li>
-          <li><span>03</span>Lighting and post-processing tuned so the disk is the only real light in the scene.</li>
-          <li><span>04</span>A disk mesh modeled in Blender and textured to hold up when you fly close to it.</li>
+          <li><span>01</span>An accretion disk made from layered beams and particle rings that spin faster near the center.</li>
+          <li><span>02</span>A shadow core with a thin bright photon ring, so it reads as missing space instead of a dark sphere.</li>
+          <li><span>03</span>A pull that ramps up as you approach, ending in a scripted spaghettification sequence.</li>
+          <li><span>04</span>The research facility itself, built and lit around the view of the black hole.</li>
         </ul>
         <h2>What's next</h2>
-        <p>Real pull on loose parts, a lensing effect on the skybox, and a way to fall in.</p>
+        <p>More of the facility, research objectives, and a leaderboard for whoever gets closest and survives.</p>
       </div>
     </div>
-    <p class="eyebrow pv-gal-label">Gallery</p>
+    <p class="eyebrow pv-gal-label">Icon &amp; thumbnails</p>
     <div class="pv-gallery">
-      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="erebusRing"></canvas></div></div><figcaption>The ring, from the place's second thumbnail</figcaption></figure>
+      <button type="button" class="shot shot-icon" data-cap="Game icon"><img src="assets/games/erebus-icon.webp" alt="EREBUS game icon" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Black Hole Research Facility"><img src="assets/games/erebus-1.webp" alt="EREBUS thumbnail: Black Hole Research Facility" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Spaghettified: don't get too close"><img src="assets/games/erebus-2.webp" alt="EREBUS thumbnail: Spaghettified" loading="lazy"></button>
     </div>
     <nav class="pv-next" aria-label="More projects">
-      <a class="prev" href="#project-kombinat"><span>← Previous</span><b>Kombinat</b></a>
+      <a class="prev" href="#project-cologne-cathedral"><span>← Previous</span><b>Cologne Cathedral</b></a>
       <a class="next" href="#project-hold-the-colours"><span>Next →</span><b>Hold the Colours</b></a>
     </nav>
   </div>
@@ -680,19 +792,20 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
 
 <article class="pview" id="project-hold-the-colours" data-title="Hold the Colours" hidden aria-labelledby="pv-htc-h">
   <div class="wrap">
-    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">02</span> / 03</span></nav>
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">03</span> / 04</span></nav>
     <header class="pv-head">
+      <img class="pv-icon" src="assets/games/hold-the-colours-icon.webp" alt="Hold the Colours game icon" width="512" height="512">
       <div>
-        <p class="eyebrow">Round-based game · 2026</p>
+        <p class="eyebrow">Napoleonic line battles · 2026</p>
         <h1 class="pv-title" id="pv-htc-h">Hold the Colours<span class="acc">.</span></h1>
-        <p class="pv-sub">One flag and everyone who wants it.</p>
+        <p class="pv-sub">France against Austria. Form the line, sound the charge, and hold the colours.</p>
         <ul class="tags pv-cats"><li>Scripting</li><li>UI Design</li><li>Animation</li><li>Building</li></ul>
       </div>
       <a class="btn primary" href="https://www.roblox.com/games/94079154793930/Hold-the-Colours" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
     </header>
     <div class="proj-media pv-hero">
-      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pid">Place 94079154793930</span></div>
-      <div class="proj-screen"><canvas class="ascii" data-art="colours"></canvas></div>
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Hold the Colours.rbxl</b></span><span class="pv-toggle" role="group" aria-label="Main picture style"><button type="button" aria-pressed="true" data-view="ascii">ASCII</button><button type="button" aria-pressed="false" data-view="image">Image</button></span></div>
+      <div class="proj-screen"><canvas class="ascii" data-img="assets/games/hold-the-colours-1.webp"></canvas><img class="pv-real" src="assets/games/hold-the-colours-1.webp" alt="French and Austrian soldiers facing each other across a field" loading="lazy"></div>
     </div>
     <div class="pv-grid">
       <aside class="pv-meta">
@@ -700,30 +813,34 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div><dt>Role</dt><dd>Solo developer</dd></div>
           <div><dt>Created</dt><dd>Oct 05, 2026</dd></div>
           <div><dt>Status</dt><dd>In development</dd></div>
-          <div><dt>Genre</dt><dd>Round-based PvP</dd></div>
-          <div><dt>Tools</dt><dd>Roblox Studio, Luau, Moon Animator 2</dd></div>
+          <div><dt>Genre</dt><dd>Napoleonic line battle</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Luau, Moon Animator 2, Blender</dd></div>
           <div><dt>Place ID</dt><dd>94079154793930</dd></div>
         </dl>
       </aside>
       <div class="pv-body">
         <h2>Overview</h2>
-        <p class="lead">Hold the Colours is a round-based game about a single flag. Grab the colours, carry them, and hold on for as long as you can while the whole server tries to take them back.</p>
-        <p>Rounds are short and loud. The longer you hold the flag, the more points you bank, and the bigger the target on your back.</p>
+        <p class="lead">Hold the Colours is a Napoleonic line-battle game. France and Austria meet on open fields with line infantry, cavalry and artillery, and every regiment fights to keep its colours flying.</p>
+        <p>Command your line, wait for the order, then present and fire. Volleys, charges and cannon fire decide who is still standing around the flag.</p>
         <h2>What I built</h2>
         <ul class="pv-list">
-          <li><span>01</span>A server-run round loop: intermission, match, results, and a clean reset between them.</li>
-          <li><span>02</span>Flag pickup, carry and drop, with the flag returning to its stand if nobody grabs it in time.</li>
-          <li><span>03</span>A HUD that shows who holds the colours, how long they've held them, and the round timer.</li>
-          <li><span>04</span>Carry and capture animations so the flag-bearer reads from across the map.</li>
-          <li><span>05</span>An arena laid out around clear sightlines to the flag stand.</li>
+          <li><span>01</span>Three arms of service: line infantry, cavalry and artillery, each with its own job on the field.</li>
+          <li><span>02</span>Volley fire with the drill of the period: make ready, present, fire.</li>
+          <li><span>03</span>Officer commands so one player can move and fire a whole line at once.</li>
+          <li><span>04</span>Cavalry charges with real momentum, and artillery that tears holes in a formation.</li>
+          <li><span>05</span>Uniforms, muskets and colours for both France and Austria.</li>
+          <li><span>06</span>Open fields and tree lines laid out for line battles.</li>
         </ul>
         <h2>What's next</h2>
-        <p>Teams, more maps, and a leaderboard for the longest hold.</p>
+        <p>More nations, bigger battles, and a campaign map to fight across.</p>
       </div>
     </div>
-    <p class="eyebrow pv-gal-label">Gallery</p>
+    <p class="eyebrow pv-gal-label">Icon &amp; thumbnails</p>
     <div class="pv-gallery">
-      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-field="flag"></canvas></div></div><figcaption>The colours, drawn live in ASCII</figcaption></figure>
+      <button type="button" class="shot shot-icon" data-cap="Game icon"><img src="assets/games/hold-the-colours-icon.webp" alt="Hold the Colours game icon" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="France vs Austria"><img src="assets/games/hold-the-colours-1.webp" alt="Hold the Colours thumbnail: France vs Austria" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Sound the charge"><img src="assets/games/hold-the-colours-2.webp" alt="Hold the Colours thumbnail: Sound the charge" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Present! Fire!"><img src="assets/games/hold-the-colours-3.webp" alt="Hold the Colours thumbnail: Present! Fire!" loading="lazy"></button>
     </div>
     <nav class="pv-next" aria-label="More projects">
       <a class="prev" href="#project-erebus"><span>← Previous</span><b>EREBUS</b></a>
@@ -734,19 +851,20 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
 
 <article class="pview" id="project-kombinat" data-title="Kombinat" hidden aria-labelledby="pv-kombinat-h">
   <div class="wrap">
-    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">03</span> / 03</span></nav>
+    <nav class="pv-crumbs" aria-label="Project navigation"><a href="#work">← All work</a><span>Project <span class="acc">04</span> / 04</span></nav>
     <header class="pv-head">
+      <img class="pv-icon" src="assets/games/kombinat-icon.webp" alt="Kombinat game icon" width="512" height="512">
       <div>
-        <p class="eyebrow">Environment · 2026</p>
+        <p class="eyebrow">Factory game · 2026</p>
         <h1 class="pv-title" id="pv-kombinat-h">Kombinat<span class="acc">.</span></h1>
-        <p class="pv-sub">A Soviet industrial complex built to feel heavy.</p>
-        <ul class="tags pv-cats"><li>Building</li><li>3D Modeling</li><li>Lighting &amp; VFX</li></ul>
+        <p class="pv-sub">Build the factory. Automate it. Fulfil the plan, then launch.</p>
+        <ul class="tags pv-cats"><li>Scripting</li><li>Building</li><li>UI Design</li><li>3D Modeling</li></ul>
       </div>
       <a class="btn primary" href="https://www.roblox.com/games/96555387229193/Kombinat" target="_blank" rel="noopener"><span class="scr">Play on Roblox</span> ↗</a>
     </header>
     <div class="proj-media pv-hero">
-      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pid">Place 96555387229193</span></div>
-      <div class="proj-screen"><canvas class="ascii" data-art="kombinat"></canvas></div>
+      <div class="proj-chrome"><span><span class="dots"><i></i><i></i><i></i></span><b>Kombinat.rbxl</b></span><span class="pv-toggle" role="group" aria-label="Main picture style"><button type="button" aria-pressed="true" data-view="ascii">ASCII</button><button type="button" aria-pressed="false" data-view="image">Image</button></span></div>
+      <div class="proj-screen"><canvas class="ascii" data-img="assets/games/kombinat-2.webp"></canvas><img class="pv-real" src="assets/games/kombinat-2.webp" alt="A factory worker raising a hammer in front of a red sunburst" loading="lazy"></div>
     </div>
     <div class="pv-grid">
       <aside class="pv-meta">
@@ -754,37 +872,47 @@ a.mag,button.mag{transition:translate .45s var(--ease),background .25s,color .25
           <div><dt>Role</dt><dd>Solo developer</dd></div>
           <div><dt>Created</dt><dd>Oct 04, 2026</dd></div>
           <div><dt>Status</dt><dd>In development</dd></div>
-          <div><dt>Genre</dt><dd>Exploration</dd></div>
-          <div><dt>Tools</dt><dd>Roblox Studio, Blender</dd></div>
+          <div><dt>Genre</dt><dd>Factory / automation</dd></div>
+          <div><dt>Tools</dt><dd>Roblox Studio, Luau, Blender</dd></div>
           <div><dt>Place ID</dt><dd>96555387229193</dd></div>
         </dl>
       </aside>
       <div class="pv-body">
         <h2>Overview</h2>
-        <p class="lead">Kombinat is an environment piece: a Soviet-era industrial complex built at full scale. Concrete blocks, a monument at the center, and a skyline meant to feel cold and very large.</p>
-        <p>Most of the work is in the build and the light. Every building comes from the same modular kit, and the fog and low sun do the rest.</p>
+        <p class="lead">Kombinat is a Soviet-themed factory game. Start with a patch of ground and a hammer, build production lines, automate them, and hit the quotas of the five-year plan.</p>
+        <p>The end goal is the space programme: everything the factory makes feeds into a rocket on the launch pad.</p>
         <h2>What I built</h2>
         <ul class="pv-list">
-          <li><span>01</span>A modular kit of concrete panels, windows and roof pieces reused across every building.</li>
-          <li><span>02</span>A central monument modeled in Blender and brought into Studio.</li>
-          <li><span>03</span>Fog, haze and low warm light to sell the size of the place.</li>
-          <li><span>04</span>A layout planned so the monument is visible from almost everywhere.</li>
+          <li><span>01</span>Placement tools for machines, conveyors and storage.</li>
+          <li><span>02</span>Production chains that turn raw materials into parts, with automation once you've earned it.</li>
+          <li><span>03</span>Five-year plans: quotas and deadlines that drive progression.</li>
+          <li><span>04</span>A space programme finale, with a rocket built from what the factory produces.</li>
+          <li><span>05</span>Propaganda-poster art direction across the icon, thumbnails and UI.</li>
         </ul>
         <h2>What's next</h2>
-        <p>Interiors, ambient sound, and a reason to explore.</p>
+        <p>More machines, shared factories in multiplayer, and a race to orbit.</p>
       </div>
     </div>
-    <p class="eyebrow pv-gal-label">Gallery</p>
+    <p class="eyebrow pv-gal-label">Icon &amp; thumbnails</p>
     <div class="pv-gallery">
-      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="kombinat2"></canvas></div></div><figcaption>Title card</figcaption></figure>
-      <figure><div class="proj-media"><div class="proj-screen"><canvas class="ascii" data-art="kombinat3"></canvas></div></div><figcaption>Skyline</figcaption></figure>
+      <button type="button" class="shot shot-icon" data-cap="Game icon"><img src="assets/games/kombinat-icon.webp" alt="Kombinat game icon" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Build, automate, launch"><img src="assets/games/kombinat-2.webp" alt="Kombinat thumbnail: Build, automate, launch" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="The space programme"><img src="assets/games/kombinat-1.webp" alt="Kombinat thumbnail: The space programme" loading="lazy"></button>
+      <button type="button" class="shot" data-cap="Build the factory, fulfil the plan"><img src="assets/games/kombinat-3.webp" alt="Kombinat thumbnail: Build the factory, fulfil the plan" loading="lazy"></button>
     </div>
     <nav class="pv-next" aria-label="More projects">
       <a class="prev" href="#project-hold-the-colours"><span>← Previous</span><b>Hold the Colours</b></a>
-      <a class="next" href="#project-erebus"><span>Next →</span><b>EREBUS</b></a>
+      <a class="next" href="#project-cologne-cathedral"><span>Next →</span><b>Cologne Cathedral</b></a>
     </nav>
   </div>
 </article>
+
+<dialog class="lightbox" id="lightbox" aria-label="Image viewer">
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button type="button" class="lb-btn lb-close" aria-label="Close">×</button>
+  <button type="button" class="lb-btn lb-prev" aria-label="Previous image">←</button>
+  <button type="button" class="lb-btn lb-next" aria-label="Next image">→</button>
+</dialog>
 
 <footer class="foot">
   <div class="wrap">
@@ -882,238 +1010,7 @@ bcdfffffffffffddcceeeddcccdca8888acb6666677777
 -------------003577775433344234---------------
 --------------259a763232223-------------------
 ----------------78312334----------------------
------------------1234-------------------------`,
-erebus: `
-223344433455789a99aababccdddddeddddddddddddddedcccbbaa98887666554333455433333211
-2444444455679998889abccdddeeeeeeeeeeeeeeeeeeeddddddcbbaa999877666544455433332221
-343444344567877677899aabbbbbbdeeedeeeeeeeeeeeeeddddddcbbaa9987765544444433222221
-34455444555566555666777777766ceedceeefffedeeeeeeeddddddcbba988765444444444332111
-33445443445445545555665566665cffd98adffffefffffeeeeddddedccba9876544332222211110
-333445567776789aabbbbcccdddddfffc778aefffeffffffffeeeddddeddcb987754432222111110
-334444554445565565655665cfffffffd6447cfffefffffffffffeeddddeedca9886543322222111
-334555666678999999aaaaaaeffffffeb6557acccceffffffffffffeeddddeedcaa9765433333211
-3345578779abccddeeeeeffffffeca875788888898879bdfffffffffeeeddddddccba87644444322
-444577779abccddeeeeefffffd9654322379888887533457befffffffeeeedddddddc98655554333
-44567779abccddeeeeefffeb743322211158878998522223359dfffffffeeeddddddcba865565433
-4567789abccdddeeeeffdb7432221111115887888973112222358cefffffeeedddddcccb97665443
-567889abccdddeeeeeeb84322211111101488988898642111222359dffffeeeeddddcbccca876554
-78899abcccddeeeeed9532211111100000489a988999851111122236befffeeeedddcbabccb97554
-899aabcccdddeeeec74222111110000000499aa98a9984001111122349effeeeedddcbaaabbba854
-889abcccdddeeeeb632211111000000000289aa99aa9730000111112237dffeeeeddccba999aba96
-889abcccdddeeda5321111100000000000028aaaaa986200000011112236ceeeeeddccba99889aa9
-89abbccddddeda53211110000000000000029aabbb9851000000001111236beeeeeddcba99877789
-99abcccddddda532111100000000000000029aabcba8400000000001111236ceeeedddcba9887667
-9abbcccdddda532111000000000000000001588acca83000000000001111236ceeedddcca9987766
-aabbcccdddb63211100000000000000000001459dc9720000000000001111237deeedddcbaa98766
-aabccccddc732111000000000000000000001439cb86100000000000001111239eeedddcbaa99876
-abbcccddc832111000000000000000000000123bcb95100000000000000111224beedddccba99887
-abbccccda521110000000000000000000000114ccb941000000000000000111236cedddccba99877
-abbccccc7321110000000000000000000000016ddb8200000000000000000111238ddddccbaa9876
-bbbcccc94211100000000000000000000000018edb7200000000000000000011125bdddccbaa9877
-bbbcccb63211000000000000000000000000018ddc61000000000000000000111238dddccbba9887
-bbbccc942111000000000000000000000000015ddc61000000000000000000011125bddccbba9987
-bbbbcb631110000000000000000000000000015ddc410000000000000000000011238ddccbaa9988
-abbbca421110000000000000000000000000017cb9210000000000000000000011125cdccbaa9988
-abbbc7321100000000000000000000000000017aa6100000000000000000000011123adccbba9987
-abbbb52111000000000000000000000000000134641111000000000000000011111227cccbba9987
-abbb942110001111111111111111111111111122321111111111111111111111122224cccbba9987
-aabb731110011353245422243222442232233455445554455433355433345434543223accbba9987
-aabb621110115aab6abbb34ab338bbb5843979bba7bcb8acba698bba787cbb7abba4239ccbba9987
-aaaa4211001179656965b578b5695456976a89865359433863799855698a664a5488336ccbbba998
-aaa942110011479a79a98499996959a7a99a89a97358323863688a99587b985a5478325bcbbaaa99
-aaa8311100014779785325876a588896843878987248322752687632587a88598885224bbbbaa999
-9aa73111000124553421134224345543422444555223111322344321243555445542224abbaa9998
-9aa731110000111111111111111111111111112111110001111111111112221222111239bbaa9988
-99a721110000000000000011111111100111111111110100110011011111111111111239bbaa9987
-999621100000000000000232333221412324232023232321332023243320000000011138bbaa9887
-999621100000000000000233233310202324221012242321333224244320000000011138baa99887
-899721100000000000000111110000000101100000110110111111011110000000011138aaa99876
-899731100000000000000000000000000000000000000000000000000000000000011139aa999876`,
-kombinat: `
-22222222222222110000000000122222210001222200122100122210001222222100000000000122
-22222222222222222111111000012222221000123210122210222200012222221000000000112222
-22222222222233345543565100000122222100022210123431222100122222100000000011222222
-22222222222235477676754100000012233332012220033442221001222221000000011222222222
-122222222222343443333322111222798acdc6001221024432220012222200000001222222222222
-0001112222222233334444797caca4eecceeb5101221039842210122221000000122222222222222
-000111134336769a89ddc7bd7edcb5eed6be8221012218ff73211222210000112222222222222222
-0465876ab94cdaddaaebe9be6eeec6ede79e922210221cff62112321000012223222222222221111
-16cac8accd7cdcdda9edd8ae6eeed6ede98ea11221122ffd51022210001222223222222211100000
-06cbc5acbd8bdddeb9edebae7dede7fefc7fb10122116ffb30222000123322232221100000000000
-05ccc49cbd9addcdb9eaecae8cdce8edcd7eb31002219ffa22210122222222211000000000000000
-04bcc88dada9ccdcb9ddeb9d9ab9b7976633222221229cd712112322221110000000000000000000
-04bbcb8dcd98cbcaa7aa964643322111001101112224655321222211000000000000000000000000
-13abbc89b9446554433221111111222333321111112aeea322111111111111111111111111111111
-235533223222222222233466679a954444432222224dffd511222222222222222222222222222222
-22222222223344677879aaa999ba964444322221114abcc222101122222222222222222222222222
-2222223444699789987778877655444443110001229fff8221221100111222222223222211222222
-222223444457756555544444433322211100112332afff7212112221100001111222222210122222
-2222234444444443333233221110000000122232129cef4212211222221001000111111211122222
-222233333211112112111000010000001223321005efd91211221012322210000001000000122222
-222222222200000000000000000000122233210028fffb0220132101222222100000000000000111
-222222222100000000000000000112333322100239fff70221023200012332221110000000000000
-22211110000000000000000001222333321100234bddd40132012210001222222321000000000000
-11000000000000000000000122233332210101334fffc20123002210000113222322211000000000
-00000000000000000000012333212321000012337fffb10233101212100001232222222110000000
-00000000000000010000011122212210000133326ffa610123200112100000022111222221000000
-00000000000000000010000001111000001233313cb5310123210013201000000000022221111100
-00000000000000000000000000000000012332116fc3210022210002101000000000012222122211
-00000000000000000000000000000000012332113894210012210001200000000000022222122222
-00000000000002467641100000000000000321006b53300022121000100011356541012212112222
-0000000000025899999a98897533211243232003cc73300023222221359bbaaa9999510002112222
-0000100000278999999abbbbcdddda7ceec63005dc7320016abacdb9ccbbbbbba999972002112222
-0001200002788999999abbbcddddddeeeeeea77bfeb43789deeeedddcccbbbbbaa99997201112222
-0001100006888999999abbbcddddddeeeeeeeeeffffbcefeeeeeeeddccccbbbbaaa9999610012222
-000000002888889999aabbbcddddddeeeeeefffffffffffeeeeeeedcccccbbbbaaa9999720000000
-000000004888888999abbbccddddddeeeeed99dffeeff88ceeeeeddcccccbbbaaaaa999830000000
-000000005888888999aabbbcddddddeeeee711bffdbfd019eeeedddccccccbaaaaaa999830000000
-00000000588888889aaabbbcddddddeeec8128dffd795017deb967accccccaaaaaaaa99830000000
-00000000388888889aaaaabccddddeeec5117efffc3100025631004cccccbaaaaaaaa99610000000
-00000000178888889aaaaabcccca79b94103dfffc400000000000005bcccbaaaaaaaa98300000000
-00000000027888889aaaaa63552000000009ffffc5100000000000003799aaaaaaaa973110000000
-000000000026777756888510000000000009fffffc5000000000000025789bcbbbb9677641000000
-000000000001232100121000000000000007fffffe70000000000000134435799864343321000000
-00000000000000000000000000000000019cfffffd50000000000000000000122210000000000000
-0000000000000000000000000000000008efffffe910000000000000000000000000000000000000`,
-colours: `
-000000111112222222222222222222222222222222333333
-000000011112222222222222222222222222222223333333
-000000011112222222222222222222222222222233333333
-000000011112222222222222222222222222222333344443
-000000011112222222222222222222222222223333444443
-000000011112222222222222222222222222333344444443
-000000011122222222224222222222222233333444444443
-00000000112222222224ed97322222223333334444444433
-00000000112222222227eeeeec9522333333344444444433
-0000000011222222222aeeeeeeeeeb733333444444444433
-0000000011222222222deeeeeeefff933344444444444433
-0000000011222222224eefecefffff644444444444444333
-0000000011222222228effb348fffe444444455554444333
-000000000122222222bfff8338fffc444444555554444332
-000000000122222223efff843bfff9444455555554443332
-000000000112222236ffffffcefff6444555555554443322
-000000000112222239ffffffffffe4455555555544443322
-000000000112222337ceffffffffc5555566555544433222
-000000000012222333447adfffff95555666655544433222
-0000000000122223344444458bef65566666655444332222
-000000000012222334444555555766666666655444332222
-000000000011222344445555556666667766655443322222
-000000000011222344455555666667777776554443222222
-000000000001222344455556677777887776554433222222
-000000000001222344455567777888887765544432222222
-000000000001122344555667777888887765544332222222
-000000000000122344555667778888877765443322222221`,
-erebusRing: `
-0110000000001232332000000000000000000000000000000000000001221210
-1210000000113983111101100000113111000000000000210000000100001232
-1134445434555654455554542111122222221111110010111111111011100112
-0122223443333332233333332111244675343221111343111110111010001332
-00000122100000000000000000124559b8543233321565100000000011232000
-0001211000000000110000000113458bcb988644312554100000013321101000
-012200000000000112100011124569acddcbba86432343100012331000001110
-12100000000000111111111234579bdeeeeedcba853222114422000000000000
-1000000000001000000111124569beffda99acdca84222441000000000000000
-000000000000000000001123468cefa64332235bc98632100000000000000000
-00000000000011000001112368bef843222111129c9521000000000000000000
-0000000000000001111111246aef832211111111289521000000000000000000
-0000000000001111111112358cfb322111111000029731000000000000000000
-0000000011111111122233479ef6322111100000015742100000000000000000
-0000011122333445566779acefe5332211111100013864211000000000000000
-123455678aabbcddeeefffffffd6554433222111113aa8764432211110000000
-6678aabcccdddeeeffffffffffd76555433222111139a9876655433322211110
-6568aa99abbbdeedeffffffffffbbbba98754433334998765544332221111111
-54555779bbcadeda9beffffffffcdccddccba987768a98765443221111000000
-344467679aa8cdb667cedeefefebba7788877655557986543222111111000000
-244479668996ab93338caccdbeeb874454444333337864432221111111100000
-12224544667445412247789a8bca542222221111147532211111100000000000
-1111111223410111111112675654842111111111365321111100000000000000
-1001000112410001110111233563982111111113643211111000000000110000
-0001000134100000000110111222584442344445554323443111001124443100
-0000000010000001010000111111497776b88975966458668454114577668200
-0000000000000010000000011111496554b66875a55358668565115676556200
-0000000000000100000111011111496543a56935965357557565225566568400
-0000000000000000000011011101387763822724977548778447668367778300
-0000000000000000000010000000123331110111332212332112332113332100
-0000000000000000000000000000001231121221122112222212111111121000
-0000000000000000000000000000000230253444345445555554333543442100
-0000000000000000000000000000001430011111112222222333222222222100
-1100000000000000000000000000013310000000003565665555534444444111
-1210000000000000000000000000234211111111112232222222212222222121
-0110000000000000000000000013431000000000000001111000000000000111`,
-kombinat2: `
-3334444443333785344444434656554333455333444433334444333223444433
-33344444444328c9334444459bacb54333457866455433355556643334444433
-23344444455114cb333455569aace758baa8aa9a766644666655543454677432
-2233444479722564333345559aabdb7aaaccaa8888543344777a7a4cd8cda322
-2222334499a9b7633333345579aabdd999aca98a9ab5eee6cc8ead4dd85c7222
-22222334799bca7543333345569aabbc9d7eeb8feef6ece8bd7fde5dbb4c8222
-222232334789bd7644333334556aacbfcc9fcf7ffff7def8ae6eee7dcd5c9222
-222233333358aca85543333345579aaff98fbf7fefe9cedd8e7ebe8dcd8ba223
-3222333333359ab865554333345558affc7fbf8fdfdaafde7f8d8c8b78654334
-43333333333358a7522554333345569fef8fdf8ececb8db74645443332233444
-444443333333354100156b643334556eceabeb59764464334444334322223444
-4444444443333310018cadd74333455555435487434675455233787611124444
-44444444444433336dffbdfc5443345434434555423979865234544311134433
-44444444444444588cffedfe6554334543212896523533322112223334443332
-44444444444444379afffcfc4454302442112222111233322112214444333322
-333344444444442499cffdfc2366302342123333101443333222313333333322
-22333333344421107aafedd94bfe322434025665101433453211113333333333
-222333333212100039afadfe9ff9213443018cd9100024543111203333334444
-222333332101000029ae9cedbd810024430019e4000003333212203444444444
-222333331000000029bc45558c82001441000140000002444222203444444444
-333333331000000039bb44457b94112220000160000002222111102344444444
-44444432100000003786445556751114410001c3000000000000000233333333
-4444443000000000111344554441000220000010000000000000000133111222
-4444442000000000111233444200000000000000000000000000000133100222
-4444442000000000111222233100000000000000000000000000000133232233
-2222221000000000211121223100000000000000000000000000000001111111
-0000000000000000201111122100000000000000000000000000000000000000
-0000000000000001101111122100000000000000000000000000000000000000
-0000000000000002001111223100000000000000000000000000000000000000
-0000000000000002001121223100000000000000000000000000000000000000
-0000000000000001001131011100000000000000000000000000000000000000
-0001111111122221000031001323333333331000000000000000000000000000
-123344444444444100015222467889aa99995211221121211111111122111100
-33334444444444432224555567899aaaaacbb752783365665573257457666200
-33333444444444444444444567889aaaaaa99300110000010000000000000000
-2222222222222222222222334556667777766300000000000000000000000000`,
-kombinat3: `
-888999999aaaaabbbbbbbcccccccccccccccdccccccccbbbbbaaa99999888888
-889999999aaaaaaaaabbbbbaaababcbacbbcccccccccccbbbbaaaa9999999988
-99999999aaaaaaa9bbabbcdeaefcffc8bbbbbbbbbbbccbbbbbbbbbaaaaaaaaa9
-aaa9bbbbed8eeeeaffddeeffbefd8f79bbbbbbbbbbbcccccccccccccccccbbbb
-99aaeebdeeaffffaffdcfdffcfff7f8abbbbbbbbbcccdddddeeeeeeeedddddcc
-99a9ef8ceebffff9ffecfdffefff9f9abbbbbbbbbcccccdddeefeeeddddccccc
-9999ffbceebeeef9fefcfcffeedead9bcccccccccccccccccdddddddcccbbccc
-bba9fddbff9ecce7dc8786677778899cddddddcccccccccccddccccccbbbbccc
-abbab7959767566788abbcbbbbbaa98adddccccccccccdcdddddcccbbbbbbbbb
-899a8899a9aa999aa968aaa9a8aaa65acccccccccddeeeceeddcccccbbbbbbbb
-68888758997a9999a85798777666657bbbbbbcccccccc88ccccccccccbbbbbbb
-466664477656555554445555667777899999999999aaa89aaaabbbbbbbbbbbbb
-3444444444444555555676666666666777777777778888899999aaaaabbbbbbb
-3444455544454555555576556655566677777777777778888888888889999999
-3654444532343334554465554333355566666666666667666666666666666666
-3344333743333333223344443334224454455555555557555555555555555555
-3133511664444445354344443354444443432344445556555555555555554444
-2132212333333333213344444442222343333344444446444444444565444444
-2011333334333331211344333341011132221111244445444444444445444444
-0002333333333332111121110121111100000011244445544444432211223334
-3333333334344433222233334444431001111122244444444444434332322222
-3333333333333443333333222222221000000100244444444444444322322101
-3333333333332222221212222222222211100001333333344443344544323303
-2222333333332221111222223333334444321000001321112222222344444333
-3333333333333333333444444444444444443200001011332011111223444333
-3333333333333333343444444444444443333211003200110000223333333333
-3333333333333333433444444444444444433302230112123321333333333333
-2333333333333333333444444344444443333201431233343321333333333333
-2333333333333333333333443333333223333330131234433211333333333333
-2333333333333333333433333333333333433443100221100002333333333333
-2233333333333333333332233333433333334333310000122333333333333333
-2232333333333333333333333333443323333332332333333333333333333333
-2222333333333333333333333333333222111233444323433333332333333222
-2222223333333333333333333332222220001555766415613566511554453000
-2223323333333333333322222223333321111111111111101111100110000000
-2223333333333333333222333333333333333333333333333333333333333322`
+-----------------1234-------------------------`
 };
 
 /* ---------- basics ---------- */
@@ -1152,13 +1049,7 @@ function decode(str, aspect) {
   return { w, h, lum, alpha, aspect };
 }
 const ART = {
-  avatar: decode(RAW.avatar, 440 / 697),
-  erebus: decode(RAW.erebus, 16 / 9),
-  kombinat: decode(RAW.kombinat, 16 / 9),
-  colours: decode(RAW.colours, 16 / 9),
-  erebusRing: decode(RAW.erebusRing, 16 / 9),
-  kombinat2: decode(RAW.kombinat2, 16 / 9),
-  kombinat3: decode(RAW.kombinat3, 16 / 9)
+  avatar: decode(RAW.avatar, 440 / 697)
 };
 
 /* ---------- glyph atlas: every ramp + glitch character pre-drawn once per size/colour ---------- */
@@ -1637,35 +1528,13 @@ document.querySelectorAll('canvas[data-art]').forEach(cv => {
   new Layer(cv, { px: w => w < 520 ? 6 : 8, alphaMin: .2, hoverR: 90, revealDur: 1.7, hoverEl: cv.closest('.proj-media'), field: imgField(ART[cv.dataset.art], { fit: 'cover' }) });
 });
 
-/* Hold the Colours gallery: a tricolour waving on its pole, drawn live */
-const flagField = (u, v, t, L) => {
-  const pole = .28, x0 = .28, x1 = .74, y0 = .2, y1 = .54, ground = .9, cw = .7 / L.cols;
-  if (Math.abs(u - pole) < cw && v > .11 && v < ground) return .82;
-  if (Math.hypot((u - pole) * L.aspect, v - .1) < .022) return 1;
-  if (Math.abs(v - ground) < .5 / L.rows && u > .12 && u < .88) return .3;
-  if (u > x0 && u < x1) {
-    const k = (u - x0) / (x1 - x0), ph = k * 11 - t * 3.2;
-    const vy = v - .03 * k * Math.sin(ph) - .012 * k * k;
-    if (vy > y0 && vy < y1) {
-      const band = Math.min(2, Math.floor((vy - y0) / (y1 - y0) * 3));
-      const edge = vy - y0 < .012 || y1 - vy < .012 || x1 - u < .006;
-      const shade = .6 + .35 * Math.cos(ph);
-      return clamp01(edge ? .9 : shade * [1, .5, .78][band]);
-    }
-  }
-  return -1;
-};
-document.querySelectorAll('canvas[data-field="flag"]').forEach(cv => {
-  new Layer(cv, { px: w => w < 520 ? 6 : 8, alphaMin: .2, accLo: .86, accHi: 1.01, hoverR: 90, revealDur: 1.7, hoverEl: cv.closest('.proj-media'), field: flagField });
-});
-
 /* your own screenshots: <canvas class="ascii" data-img="file.png"> is sampled into ASCII on load (same-site images) */
 function sampleImage(src) {
   return new Promise((res, rej) => {
     const img = new Image(); img.crossOrigin = 'anonymous';
     img.onload = () => {
       try {
-        const w = 96, h = Math.max(1, Math.round(w * img.naturalHeight / img.naturalWidth));
+        const w = 128, h = Math.max(1, Math.round(w * img.naturalHeight / img.naturalWidth));
         const c = document.createElement('canvas'); c.width = w; c.height = h;
         const x = c.getContext('2d'); x.drawImage(img, 0, 0, w, h);
         const d = x.getImageData(0, 0, w, h).data, lum = new Float32Array(w * h), alpha = new Float32Array(w * h).fill(1);
@@ -2004,6 +1873,7 @@ if (FINE) {
   document.querySelectorAll('.proj-media').forEach(el => { el.classList.add('spot'); tilt(el, 5); });
   document.querySelectorAll('.svc').forEach(el => { el.classList.add('spot'); tilt(el, 9); });
   document.querySelectorAll('.pv-next a').forEach(el => { el.classList.add('spot'); tilt(el, 7); });
+  document.querySelectorAll('.shot').forEach(el => { el.classList.add('spot'); tilt(el, 6); });
   const rc = document.querySelector('.rcard'); rc.classList.add('spot'); tilt(rc, 10);
   tilt(document.querySelector('.polaroid'), 12);
 
@@ -2029,6 +1899,39 @@ if (FINE) {
     hero.addEventListener('pointerleave', () => { hero.style.setProperty('--hx', '0'); hero.style.setProperty('--hy', '0'); });
   }
 }
+
+/* ---------- project pages: ASCII / Image switch on the main picture ---------- */
+document.querySelectorAll('.pv-toggle').forEach(t => t.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  t.closest('.pv-hero').classList.toggle('real', b.dataset.view === 'image');
+  t.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+}));
+
+/* ---------- gallery lightbox ---------- */
+const lb = $('lightbox'), lbImg = $('lb-img'), lbCap = $('lb-cap');
+let lbSet = [], lbIdx = 0;
+const lbShow = i => {
+  lbIdx = (i + lbSet.length) % lbSet.length;
+  const b = lbSet[lbIdx], im = b.querySelector('img');
+  lbImg.src = im.src; lbImg.alt = im.alt; lbCap.textContent = b.dataset.cap || '';
+  lb.querySelector('.lb-prev').hidden = lb.querySelector('.lb-next').hidden = lbSet.length < 2;
+};
+document.querySelectorAll('.pv-gallery').forEach(g => {
+  const shots = [...g.querySelectorAll('.shot')];
+  shots.forEach((b, i) => b.addEventListener('click', () => {
+    lbSet = shots; lbShow(i);
+    if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+  }));
+});
+lb.querySelector('.lb-close').addEventListener('click', () => lb.close());
+lb.querySelector('.lb-prev').addEventListener('click', () => lbShow(lbIdx - 1));
+lb.querySelector('.lb-next').addEventListener('click', () => lbShow(lbIdx + 1));
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+lb.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') lbShow(lbIdx - 1);
+  else if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+});
 
 /* ---------- project pages: #project-<id> swaps the home page for that project's page; any other hash shows home ---------- */
 const homeEl = $('top'), pviews = [...document.querySelectorAll('.pview')], baseTitle = document.title;
