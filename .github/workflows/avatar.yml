@@ -1,0 +1,68 @@
+# Keeps assets/avatar.png in sync with offendeer's Roblox avatar, so the ASCII avatar on the site follows it.
+# Runs every 3 hours, whenever this file changes, and on demand: Actions → Update Roblox avatar → Run workflow.
+name: Update Roblox avatar
+
+on:
+  schedule:
+    - cron: "23 */3 * * *"
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: [".github/workflows/avatar.yml"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: avatar
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      ROBLOX_USER_ID: "98007942"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download the current avatar render
+        id: fetch
+        run: |
+          set -euo pipefail
+          api="https://thumbnails.roblox.com/v1/users/avatar?userIds=${ROBLOX_USER_ID}&size=720x720&format=Png&isCircular=false"
+          json=$(curl -fsS --retry 3 "$api")
+          state=$(jq -r '.data[0].state' <<<"$json")
+          url=$(jq -r '.data[0].imageUrl // empty' <<<"$json")
+          if [ "$state" != "Completed" ] || [ -z "$url" ]; then
+            echo "Roblox hasn't finished rendering the avatar (state: $state). The next run will pick it up."
+            exit 0
+          fi
+          mkdir -p assets
+          curl -fsS --retry 3 -o assets/avatar.png "$url"
+          if [ "$(file --mime-type -b assets/avatar.png)" != "image/png" ]; then
+            echo "Roblox returned something that isn't a PNG; leaving the current avatar in place."
+            git checkout -- assets/avatar.png 2>/dev/null || rm -f assets/avatar.png
+            exit 0
+          fi
+          printf '{"hash":"%s"}\n' "$(sha256sum assets/avatar.png | cut -c1-16)" > assets/avatar.json
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and redeploy if the avatar changed
+        if: steps.fetch.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git add assets/avatar.png assets/avatar.json
+          if git diff --cached --quiet; then
+            echo "Avatar unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898741+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update Roblox avatar"
+          git push
+          # Pushes made by this workflow don't trigger other workflows, so start the Pages deploy directly.
+          gh workflow run static.yml --ref main

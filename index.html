@@ -1513,6 +1513,52 @@ function wordmark(text) {
   };
 }
 
+/* ---------- avatar: drawn from assets/avatar.png, which the "Update Roblox avatar" GitHub Action keeps in sync
+   with the Roblox avatar. Until that file loads (or if it can't), the built-in avatar above is used. ---------- */
+const avatarSlots = [];
+const avatarField = o => {
+  const slot = { o, f: imgField(ART.avatar, o) };
+  avatarSlots.push(slot);
+  return (u, v, t, L, k) => slot.f(u, v, t, L, k);
+};
+function sampleAvatar(src) {
+  return new Promise((res, rej) => {
+    const img = new Image(); img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const W0 = img.naturalWidth, H0 = img.naturalHeight;
+        const c0 = document.createElement('canvas'); c0.width = W0; c0.height = H0;
+        const x0 = c0.getContext('2d'); x0.drawImage(img, 0, 0);
+        const d0 = x0.getImageData(0, 0, W0, H0).data;
+        let minx = W0, miny = H0, maxx = -1, maxy = -1;
+        for (let y = 0; y < H0; y++) for (let x = 0; x < W0; x++) {
+          if (d0[(y * W0 + x) * 4 + 3] > 20) { if (x < minx) minx = x; if (x > maxx) maxx = x; if (y < miny) miny = y; if (y > maxy) maxy = y; }
+        }
+        if (maxx < 0) throw new Error('empty avatar image');
+        const sw = maxx - minx + 1, sh = maxy - miny + 1, w = 72, h = Math.max(1, Math.round(w * sh / sw));
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(img, minx, miny, sw, sh, 0, 0, w, h);
+        const d = x.getImageData(0, 0, w, h).data, n = w * h, lum = new Float32Array(n), alpha = new Float32Array(n), vis = [];
+        for (let i = 0; i < n; i++) {
+          const l = (.2126 * d[i * 4] + .7152 * d[i * 4 + 1] + .0722 * d[i * 4 + 2]) / 255;
+          lum[i] = l;
+          if (d[i * 4 + 3] > 60) { alpha[i] = 1; vis.push(l); }
+        }
+        vis.sort((a, b) => a - b);
+        const lo = vis[(vis.length * .02) | 0] || 0, hi = vis[(vis.length * .985) | 0] || 1;
+        for (let i = 0; i < n; i++) lum[i] = Math.pow(clamp01((lum[i] - lo) / Math.max(.01, hi - lo)), .85);
+        res({ w, h, lum, alpha, aspect: sw / sh });
+      } catch (e) { rej(e); }
+    };
+    img.onerror = rej; img.src = src;
+  });
+}
+fetch('assets/avatar.json', { cache: 'no-store' })
+  .then(r => r.ok ? r.json() : null, () => null)
+  .then(meta => sampleAvatar('assets/avatar.png' + (meta && meta.hash ? '?v=' + meta.hash : '')))
+  .then(art => avatarSlots.forEach(s => { s.f = imgField(art, s.o); }))
+  .catch(() => { /* no synced avatar yet: keep the built-in one */ });
+
 /* ---------- mount canvases ---------- */
 const svcHover = id => $(id).closest('.svc');
 new Layer($('hero-bg'), {
@@ -1520,7 +1566,7 @@ new Layer($('hero-bg'), {
   field: vortexField({ cx: .5, cy: .47, R: .21, tilt: .2 }),
   frame: (L, t, lt) => { L.ign = RM ? 1 : smooth(0, 2.6, lt); }
 });
-new Layer($('hero-avatar'), { px: w => w < 200 ? 5.5 : 7, alphaMin: .3, scan: true, hoverR: 70, shimmer: .004, revealDur: 1.8, field: imgField(ART.avatar, { gamma: .85, floor: .1 }) });
+new Layer($('hero-avatar'), { px: w => w < 200 ? 5.5 : 7, alphaMin: .3, scan: true, hoverR: 70, shimmer: .004, revealDur: 1.8, field: avatarField({ gamma: .85, floor: .1 }) });
 new Layer($('hero-brick'), { px: w => w < 160 ? 5.5 : 7, alphaMin: .3, hoverR: 50, frame: meshFrame(buildBrick(), t => [-(.5 + .14 * Math.sin(t * .4)), t * .55, .1 * Math.sin(t * .3)], .44), field: bufField });
 new Layer($('work-hole'), { px: 7, alphaMin: .28, accLo: .78, accHi: 1.01, hoverR: 60, frame: meshFrame(buildHole(), t => [-(.42 + .08 * Math.sin(t * .35)), t * .45, .18], .46), field: bufField });
 
@@ -1565,9 +1611,9 @@ new Layer($('art-sword'), { px: 6.5, alphaMin: .25, hoverR: 50, scan: true, hove
 const fx = fire();
 new Layer($('art-fire'), { px: 7, alphaMin: .2, accLo: .36, accHi: .7, hoverR: 0, shimmer: .006, reveal: false, hoverEl: svcHover('art-fire'), frame: fx.frame, field: fx.field });
 
-new Layer($('about-avatar'), { px: 6.5, color: INK, accent: ACC_INK, alphaMin: .35, hoverR: 60, shimmer: .002, field: imgField(ART.avatar, { gamma: .85, floor: .1, invert: true }) });
+new Layer($('about-avatar'), { px: 6.5, color: INK, accent: ACC_INK, alphaMin: .35, hoverR: 60, shimmer: .002, field: avatarField({ gamma: .85, floor: .1, invert: true }) });
 new Layer($('about-chain'), { px: w => w < 130 ? 4.5 : 5.5, alphaMin: .3, hoverR: 30, frame: meshFrame(buildChain(), t => [.6 + .3 * Math.sin(t * .5), t * .7, .3 * Math.sin(t * .37)], .44), field: bufField });
-new Layer($('card-avatar'), { px: 4.5, alphaMin: .3, hoverR: 30, field: imgField(ART.avatar, { fit: 'cover', crop: [.16, 0, .66, .36], gamma: .8, floor: .12 }) });
+new Layer($('card-avatar'), { px: 4.5, alphaMin: .3, hoverR: 30, field: avatarField({ fit: 'cover', crop: [.16, 0, .66, .36], gamma: .8, floor: .12 }) });
 const wm = wordmark('offendeer.');
 new Layer($('foot-mark'), { px: w => w < 640 ? 4.5 : 7, alpha: .95, alphaMin: .15, hoverR: 120, hoverBoost: .5, revealDur: 2, init: wm.init, field: wm.field });
 

@@ -13,6 +13,8 @@ Live at **https://mrbignooby.github.io/offendeer.io/** until the custom domain i
 | `assets/games/` | Each game's icon and thumbnails (WebP). The ASCII art on the site is drawn from these files when the page loads |
 | `CNAME` | The custom domain, `offendeer.com` (see the note below) |
 | `.github/workflows/static.yml` | Publishes the site to GitHub Pages on every push to `main` |
+| `.github/workflows/avatar.yml` | Every 3 hours, copies your current Roblox avatar into `assets/avatar.png` and republishes if it changed |
+| `assets/avatar.png` | Your Roblox avatar, kept up to date by the workflow above. The ASCII avatar on the site is drawn from it |
 
 ## How it deploys
 
@@ -55,6 +57,7 @@ Everything is in `index.html`. Edit it on GitHub (the pencil icon) and commit; t
 
 - **Discord**: `DISCORD_ID` near the top of the `<script>` sets the profile every Contact button opens. The card's picture, name, status and banner update on their own through Lanyard, which needs you to stay in the Lanyard Discord server (discord.gg/lanyard).
 - **Adding work**: copy an `<article class="proj">` block in the Selected Work section. Set `data-cat` to one or more of `scripting ui building animation modeling vfx`, and a filter button appears for each one in use. For a picture, upload the image next to `index.html` and use `<canvas class="ascii" data-img="your-image.png"></canvas>`; it is turned into ASCII art when the page loads.
+- **Avatar**: change your Roblox avatar and the site follows within about 3 hours. For an instant update, open **Actions → Update Roblox avatar → Run workflow**. GitHub pauses scheduled workflows in repositories with no activity for 60 days; if that happens, the Actions tab shows a button to turn it back on.
 - **Images**: to change a game's icon or thumbnail, upload a new image to `assets/games/` with the same file name (for example `kombinat-2.webp`). The ASCII art and the gallery both update. PNG or JPG works too if you also change the file name in `index.html`.
 - **Project pages**: each project has its own page, an `<article class="pview" id="project-...">` block after `</main>`, opened at `offendeer.com/#project-...`. To add one, copy a block, give it a new `id` and `data-title`, and point the project card's links at `#project-<new id>`. The overview, "What I built" and "What's next" text is placeholder copy, so rewrite it freely.
 - **Motion**: every animation runs for every visitor, including people whose system asks for reduced motion. Set `CALM` to `true` near the top of the script to drop the large movements for them.
